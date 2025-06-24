@@ -9,7 +9,7 @@ from typing import Optional, Union
 from langchain_core.tools import tool  # 将函数标记为可悲AI调用的工具
 from sqlalchemy.engine import row
 
-from AIMultiModel.ctrip.tools.location_trans import transform_location
+from .location_trans import transform_location
 
 db = "../travel_new.sqlite"  # 这是数据库文件名
 

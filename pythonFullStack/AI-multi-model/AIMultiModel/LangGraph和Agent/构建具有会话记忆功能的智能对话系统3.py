@@ -6,8 +6,7 @@ from langgraph.graph import add_messages, StateGraph
 from langgraph.prebuilt import ToolNode, tools_condition #处理工具调用节点和条件判断函数
 from typing import Annotated
 from typing_extensions import TypedDict
-from AIMultiModel.LangGraph和Agent.构建可视化图和实现流式对话功能函数 import loop_graph_invoke
-
+from .构建可视化图和实现流式对话功能函数  import *
 
 # 1、定义一个状态  类型
 #使用Annotated类型注解关联add_messages函数，确保消息列表可被自动更新和管理
