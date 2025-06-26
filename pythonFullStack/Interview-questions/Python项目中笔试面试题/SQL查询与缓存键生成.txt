@@ -1,0 +1,15 @@
+#SQLAlchemy查询语句
+
+query_result = User.query.join(User.profile).filter_by(id=1).first()
+
+#对应的原生SQL
+
+sql = "select a.user_id, a.user_name, b.gender, b.birthday from tbl_user as a inner join tbl_profile as b on a.user_id=b.user_id where a.user_id=1;"
+
+#生成迭代器
+
+query = md5(sql)  # 'fwoifhwoiehfiowy23982f92h929y3209hf209fh2'
+
+# redis ，将结果缓存到Redis
+
+setex(query, expiry, json.dumps(query_result))

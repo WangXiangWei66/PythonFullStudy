@@ -1,0 +1,47 @@
+场景一：返回JSON数据的API接口
+这段代码展示了典型的 Flask API 端点，结合了缓存机制以提高性能。
+@route('/articles') #路由装饰器
+这是 Flask 的路由定义，将 URL 路径/articles映射到get_articles函数
+客户端通过访问http://yourdomain/articles触发这个函数
+@cache.cached(timeout=30*60)
+使用 Flask-Caching 扩展实现缓存
+timeout=30*60设置缓存有效期为 30 分钟（1800 秒）
+默认行为：使用请求的完整 URL（包括查询参数）作为缓存键
+
+  def get_articles():
+
+      ch = request.args.get('ch')  #从URL中提取ch参数
+
+      articles = Article.query.all() #提取文章的数据
+        #N+1查询问题
+      for article in articles:
+
+          user = User.query.filter_by(id=article.user_id).first()
+
+          comment = Comment.query.filter_by(article_id=article.id).all()
+
+        results = {...} # 格式化输出
+
+     return results
+
+
+实例二：返回HTML模板的页面
+
+@route('/articles')
+@cache.cached(timeout=30*60)
+
+  def get_articles():
+
+      ch = request.args.get('ch')
+
+      articles = Article.query.all()
+
+      for article in articles:
+
+          user = User.query.filter_by(id=article.user_id).first()
+
+          comment = Comment.query.all()
+
+     results = {...}
+
+     return render_template('article_temp', results)

@@ -1,0 +1,31 @@
+@app.route('/test') #缓存设置与获取
+def test():
+    # 设置单个字符串缓存，有效期30秒
+    cache.set('name', '小明', timeout=30)
+
+    # 设置复杂对象（字典）缓存，使用默认超时时间
+    cache.set('person', {'name':'小明', 'age':18})
+
+    # 获取单个缓存值
+    x = cache.get('name')
+    print(x)  # 输出: 小明
+
+    # 批量设置多个缓存项
+    cache.set_many([('name1', '小明'), ('name2', '老王')])
+
+    # 批量获取缓存项
+    print(cache.get_many("name1", "name2"))  # 输出: ('小明', '老王')
+
+    # 删除单个缓存项（注释掉的代码）
+    # print(cache.delete("name"))
+
+    # 批量删除缓存项
+    print(cache.delete_many("name1", "name2"))  # 输出: True
+
+    return 'test'
+@app.route('/test1')  #验证缓存状态
+def test1():
+    x = cache.get('name')
+    print(x)
+    print(cache.get_many("name1", "name2"))
+    return 'test1'

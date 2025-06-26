@@ -1,0 +1,49 @@
+#Flask应用中配置缓存系统的不同方式
+#配置字典的方式
+config = {
+    "DEBUG": True,                # Flask调试模式，开发环境建议开启
+    "CACHE_TYPE": "SimpleCache",  # 缓存类型为SimpleCache（本地字典）
+    "CACHE_DEFAULT_TIMEOUT": 300  # 默认缓存超时时间（秒）
+}
+
+app = Flask(__name__)
+app.config.from_mapping(config)  # 从字典加载配置
+cache = Cache(app)  # 使用已配置的app初始化缓存
+#Cache您也可以稍后在配置时使用 init_app方法设置您的实例：
+#延迟初始化方式
+cache = Cache(config={'CACHE_TYPE': 'SimpleCache'})  # 先创建缓存实例
+
+app = Flask(__name__)
+cache.init_app(app)  # 稍后使用init_app方法绑定应用
+
+#通用缓存配置参数
+
+CACHE_TYPE:设置缓存的类型
+    设置都是在config中设置的# 下面五个参数是所有的类型共有的
+CACHE_NO_NULL_WARNING = "warning" # null类型时的警告消息
+CACHE_ARGS = [] # 在缓存类实例化过程中解包和传递的可选列表，用来配置相关后端的额外的参数
+CACHE_OPTIONS = {}  # 可选字典,在缓存类实例化期间传递，也是用来配置相关后端的额外的键值对参数
+CACHE_DEFAULT_TIMEOUT # 默认过期/超时时间，单位为秒
+CACHE_THRESHOLD # 缓存的最大条目数
+
+
+CACHE_TYPE = null # 默认的缓存类型，无缓存
+CACHE_TYPE = 'simple' # 使用本地python字典进行存储，非线程安全
+
+
+CACHE_TYPE = 'filesystem' # 使用文件系统来存储缓存的值
+CACHE_DIR = "" # 文件目录
+
+CACHE_TYPE = 'memcached' # 使用memcached服务器缓存
+CACHE_KEY_PREFIX # 设置cache_key的前缀
+CAHCE_MEMCACHED_SERVERS # 服务器地址的列表或元组
+CACHE_MEMCACHED_USERNAME # 用户名
+CACHE_MEMCACHED_PASSWORD # 密码
+
+CACHE_TYPE = 'redis' # 使用redis作为缓存
+CACHE_KEY_PREFIX # 设置cache_key的前缀
+CACHE_REDIS_HOST  # redis地址
+CACHE_REDIS_PORT  # redis端口
+CACHE_REDIS_PASSWORD # redis密码
+CACHE_REDIS_DB # 使用哪个数据库# 也可以一键配置
+CACHE_REDIS_URL 连接到Redis服务器的URL。示例 redis://user:password@localhost:6379/2

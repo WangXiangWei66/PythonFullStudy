@@ -1,0 +1,6 @@
+@cache.cached(timeout=50, key_prefix='all_comments') #这里自定义了缓存键前缀
+def get_all_comments():
+    comments = do_serious_dbio()  #执行耗时的数据库查询
+    return [x.author for x in comments] #提取评论作者列表
+
+cached_comments = get_all_comments()  #函数调用并缓存结果

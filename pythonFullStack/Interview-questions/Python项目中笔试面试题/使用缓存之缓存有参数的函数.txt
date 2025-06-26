@@ -1,0 +1,11 @@
+@cache.memoize(timeout=50, make_name='param_func') #不同的参数组合会生成不同的缓存键
+def param_func(a, b):
+    return a+b+random.randint(1, 50)
+@app.route('/cache/')  #触发缓存的路由
+def cache():
+    param_func(1, 2)
+		return 'cache'
+@app.route('/delete/')  #清除缓存的路由
+def delete():
+    cache.delete_memoized(param_func, 1, 2)
+		return 'delete'

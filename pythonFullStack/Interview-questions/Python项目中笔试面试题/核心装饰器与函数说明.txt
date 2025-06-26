@@ -1,0 +1,23 @@
+cache.cached：装饰器，装饰无参数函数，使得该函数结果可以缓存
+    参数:
+    timeout:超时时间
+    key_prefix：设置该函数的标志
+    unless：设置是否启用缓存，如果为True，不启用缓存
+    forced_update：设置缓存是否实时更新，如果为True，无论是否过期都将更新缓存
+    query_string：为True时，缓存键是先将参数排序然后哈希的结果
+
+cache.memoize：装饰器，装饰有参数函数，使得该函数结果可以缓存
+		make_name：设置函数的标志，如果没有就使用装饰的函数
+		# 其他参数同cached
+
+cache.delete_memoized：删除缓存
+  参数：
+  func_name：缓存函数的引用
+  *args：函数参数
+
+cache.clear() # 清除缓存所有的缓存，这个操作需要慎重
+cache.
+	get(key)  #获取一个键的值，如果值是json格式会自动转化成字典
+	set(key,value,timeout)  #设置一个键值，value可以是字典，会自动转化json格式的字符串
+	add(key, value, timeout=None)  #设置一个键值,如果存在就pass，注意和set的区别
+	delete(key)  #删除键

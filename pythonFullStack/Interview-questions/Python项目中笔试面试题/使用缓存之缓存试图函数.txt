@@ -1,0 +1,10 @@
+要缓存视图函数，您将使用cached()装饰器。这个装饰器默认使用 request.path 作为 cache_key：
+@app.route("/")
+@cache.cached(timeout=50)
+def index():
+    return render_template('index.html')
+@app.route('/clear/')
+
+def index(): #清除缓存
+	cache.clear()
+    return '清除所有的缓存，操作需慎重，不推荐使用'
