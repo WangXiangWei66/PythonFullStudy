@@ -4,17 +4,17 @@ from pydantic import BaseModel, Field
 class CompleteOrEscalate(BaseModel):  # 定义数据模型类
     """
     一个工具，用于标记当前任务为已完成和/或将对话的控制权升级到主助理，
-    主助理可以根据洪湖的需求重新路由对话
+    主助理可以根据用户的需求重新路由对话。
     """
 
     cancel: bool = True  # 默认取消任务
     reason: str  # 取消或升级的原因说明
 
-    class Config:  # 内部类 Config : json_schema_extra : 这个字段包含了一些示例数据
+    class Config:  # 内部类 Config: json_schema_extra: 这个字段包含了一些示例数据
         json_schema_extra = {
             "example": {
                 "cancel": True,
-                "reason": "用户改变了对当前任务的想法。,"
+                "reason": "用户改变了对当前任务的想法。",
             },
             "example2": {
                 "cancel": True,
@@ -22,31 +22,31 @@ class CompleteOrEscalate(BaseModel):  # 定义数据模型类
             },
             "example3": {
                 "cancel": False,
-                "reason": "我需要搜索用户的电子邮件或日历以获取更多信息。"
+                "reason": "我需要搜索用户的电子邮件或日历以获取更多信息。",
             },
         }
 
 
 class ToFlightBookingAssistant(BaseModel):
-    '''
+    """
     将工作转交给专门处理航班查询，更新和取消的助理。
-    '''
+    """
 
     request: str = Field(
-        description="更新航班主力在继续之前澄清的任何后续问题。"
+        description="更新航班助理在继续之前需要澄清的任何后续问题。"
     )
 
 
 class ToBookCarRental(BaseModel):
-    '''
+    """
     将工作转交给专门处理租车预订的助理。
-    '''
+    """
 
     location: str = Field(
         description="用户想要租车的位置。"
     )
-    start_data: str = Field(description="租车开始日期。")
-    end_data: str = Field(description="租车结束日期。")
+    start_date: str = Field(description="租车开始日期。")
+    end_date: str = Field(description="租车结束日期。")
     request: str = Field(
         description="用户关于租车的任何额外信息或请求。"
     )
@@ -63,21 +63,17 @@ class ToBookCarRental(BaseModel):
 
 
 class ToHotelBookingAssistant(BaseModel):
-    '''
+    """
     将工作转交给专门处理酒店预订的助理。
-    '''
+    """
 
     location: str = Field(
-        description="用户想要预定酒店的位置。"
+        description="用户想要预订酒店的位置。"
     )
-    checkin_date: str = Field(
-        description="酒店入住日期。"
-    )
-    checkout_date: str = Field(
-        description="酒店退房日期。"
-    )
+    checkin_date: str = Field(description="酒店入住日期。")
+    checkout_date: str = Field(description="酒店退房日期。")
     request: str = Field(
-        description="用户关于酒店预定的任何额外信息或请求."
+        description="用户关于酒店预订的任何额外信息或请求。"
     )
 
     class Config:
@@ -92,12 +88,12 @@ class ToHotelBookingAssistant(BaseModel):
 
 
 class ToBookExcursion(BaseModel):
-    '''
+    """
     将工作转交给专门处理旅行推荐及其他游览预订的助理。
-    '''
+    """
 
     location: str = Field(
-        description="用户想要预定推荐旅行的位置。"
+        description="用户想要预订推荐旅行的位置。"
     )
     request: str = Field(
         description="用户关于旅行推荐的任何额外信息或请求。"

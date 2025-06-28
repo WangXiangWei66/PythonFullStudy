@@ -78,8 +78,8 @@ primary_assistant_tools = [
 
 # 创建可运行对象，绑定主助理提示模板和工具集，包括委派给专门助理的工具
 assistant_runnable = primary_assistant_prompt | llm.bind_tools(
-    primary_assistant_tools,
-    +[
+    primary_assistant_tools
+    + [
         ToFlightBookingAssistant,  # 用于转交航班更新或取消的任务
         ToBookCarRental,  # 用于转交租车预订的任务
         ToHotelBookingAssistant,  # 用于转交酒店预订的任务
